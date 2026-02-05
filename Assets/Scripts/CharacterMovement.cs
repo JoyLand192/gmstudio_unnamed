@@ -1,11 +1,8 @@
-using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class CRMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] bool isGrounded;
     [SerializeField] float jumpForce;
@@ -20,13 +17,14 @@ public class CRMovement : MonoBehaviour
         get => moveSpeed;
         set => moveSpeed = value;
     }
-    [SerializeField] float gravityValue;
-    public float GravityValue
+    const float gravity = 9.8f;
+    [SerializeField] float gravityBoost;
+    public float GravityBoost
     {
-        get => gravityValue;
+        get => gravityBoost;
         set
         {
-            gravityValue = value;
+            gravityBoost = value;
         }
     }
     [SerializeField] Vector3 velocity = new();
@@ -67,7 +65,7 @@ public class CRMovement : MonoBehaviour
         camDirectionX.Normalize();
         camDirectionZ.Normalize();
 
-        if (!isGrounded) velocity.y -= gravityValue * Time.deltaTime;
+        if (!isGrounded) velocity.y -= gravity * gravityBoost * Time.deltaTime;
         if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         if (Input.GetKeyDown(KeyCode.Space))
