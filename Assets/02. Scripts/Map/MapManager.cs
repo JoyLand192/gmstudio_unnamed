@@ -11,7 +11,7 @@ public class MapManager : MonoBehaviour
     public void Update()
     {
         // 탭(Tab) 키를 누르고 있는 동안 맵을 엽니다
-        if (Input.GetKey(KeyCode.Tab))
+        if (Input.GetKey(KeyCode.M))
         {
             MapOpen();
         }
